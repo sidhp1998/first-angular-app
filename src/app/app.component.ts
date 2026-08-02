@@ -1,15 +1,23 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { DUMMY_USERS } from './user/dummy_users';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, UserComponent],
+  imports: [RouterOutlet, HeaderComponent, UserComponent, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent  {
+export class AppComponent {
   protected readonly title = signal('first-angular-app');
   users = DUMMY_USERS;
+
+  onSelectUser(user: any) {
+    this.users = this.users.map((u: any) => ({
+      ...u,
+      selected: u.id === user.id,
+    }));
+  }
 }
