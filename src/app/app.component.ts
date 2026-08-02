@@ -12,4 +12,11 @@ import { DUMMY_USERS } from './user/dummy_users';
 export class AppComponent  {
   protected readonly title = signal('first-angular-app');
   users = DUMMY_USERS;
+
+  onUserSelected(selectedUser: any){
+    this.users = this.users.map((u: any) => ({
+      ...u,
+      selected: u.id === selectedUser.id,
+    }));
+  }
 }
