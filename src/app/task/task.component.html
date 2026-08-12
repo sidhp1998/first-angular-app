@@ -1,0 +1,13 @@
+<article>
+<h2>{{task.title}}</h2>    
+<time>{{task.dueDate|date:'fullDate'}}</time>
+<P class="action">
+    <button [ngClass]="{'disabled':task.completed==true}"
+    (click)="completeTask()">
+        {{task.completed == false ? 'Complete': 'Completed'}}
+    </button>
+    <button  (click)="deleteTask()">
+        Delete
+    </button>
+</P>
+</article>
