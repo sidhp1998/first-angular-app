@@ -1,19 +1,23 @@
 <app-header></app-header>
+<app
 <main>
   <ul id="users">
     <li>
-      <app-add-user (addUser)="onAddUser($event)"></app-add-user>    
+      <app-add-user (click)="onClickAddUser()"></app-add-user>    
     </li>
-    @for (user of users;track user.id) {
+    @for (user of users();track user.id) {
       <li>
-        <app-user [selectedUser]="user" (selectUser)="onSelectUser($event)"> </app-user>
+        <app-user [selectedUser]="user" (click)="onSelectUser(user.id)"> </app-user>
       </li>
     }
   </ul>
-  @if(selectedUser) {
+  <!-- @if(selectedUser) {
     <app-task-list [selectedUser]="selectedUser"></app-task-list>
   }
   @else {
     <p>Please select an user</p>
+  } -->
+  @if(users().length==0){
+    <p>Please Add an user</p>
   }
 </main>

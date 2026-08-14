@@ -1,29 +1,27 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
-import {TaskListComponent} from './taskList/taskList.component';
-import { DUMMY_USERS } from './user/dummy_users';
+import { TaskListComponent } from './taskList/taskList.component';
+import { AddUserComponent } from './app-add-user/app-add-user.component';
+import { UsersService } from './services/users.service';
+import { UserInterface } from './models/user.interface';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, UserComponent, CommonModule,TaskListComponent],
+  imports: [HeaderComponent, UserComponent, TaskListComponent, AddUserComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent  {
   protected readonly title = signal('first-angular-app');
-  users = DUMMY_USERS;
+  private userService = inject(UsersService);
+  users = signal<UserInterface[]>(this.userService.usersList());
+  selectedUser = signal<UserInterface|null>(null);
+  onClickAddUser(){
 
-  get selectedUser() {
-    return this.users.find((user: any) => user.selected)!;
   }
 
-  onSelectUser(user: any) {
-    this.users = this.users.map((u: any) => ({
-      ...u,
-      selected: u.id === selectedUser.id,
-    }));
-  }
 
-  onAddUser
+  onSelectUser(userID:number){
+    
+  }
 }

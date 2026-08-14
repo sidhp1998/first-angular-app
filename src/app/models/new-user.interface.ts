@@ -1,4 +1,4 @@
 export interface NewUserInterface{
     name:string,
-    avatar:string    
+    avatar:string
 }
