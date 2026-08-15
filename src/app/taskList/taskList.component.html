@@ -1,0 +1,27 @@
+@if (isAddingNewTask) {
+  <app-new-task (taskAddCancelled)="onTaskAddCancelled()" (taskAdded)="onTaskAdded($event)">
+  </app-new-task>
+}
+
+<section id="tasks">
+  <header>
+    <h2>{{ selectedUser()?.name }}'s Task</h2>
+    <menu>
+      <button (click)="addTask()">Add Task</button>
+    </menu>
+  </header>
+  <ul>
+    @for (task of listOfTasksForSelectedUser(); track task.id) {
+      <li>
+        <app-task
+          [task]="task"
+          (taskDelete)="onTaskDelete($event)"
+          (taskComplete)="onTaskComplete($event)"
+        ></app-task>
+      </li>
+    }
+    @if (listOfTasksForSelectedUser().length === 0) {
+      <li>No tasks found</li>
+    }
+  </ul>
+</section>

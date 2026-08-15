@@ -1,0 +1,21 @@
+<app-modal>
+  <div modal-body>
+    <app-form>
+      <form (ngSubmit)="submitAddNewUser()">
+        <p>
+          <label for="title">User Name</label>
+          <input type="text" id="title" name="title" [(ngModel)]="newUser().name" />
+        </p>
+        <p>
+          <label for="title">Avatar</label>
+          <input type="text" id="avatar" name="avatar" [(ngModel)]="newUser().avatar" />
+        </p>
+        <p class="actions">
+          <button type="button" (click)="cancelAddTask()">Cancel</button>
+          <button type="submit">
+            {{inputUserForEdit() ? 'Update' : 'Create'}}</button>
+        </p>
+      </form>
+    </app-form>
+  </div>
+</app-modal>

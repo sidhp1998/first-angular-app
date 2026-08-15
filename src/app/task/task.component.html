@@ -1,0 +1,54 @@
+<article [class.completed]="task.completed">
+  <div class="task-header">
+    <div class="task-title-group">
+      <h2>{{ task.title }}</h2>
+    </div>
+    @if (task.completed) {
+      <span class="badge completed-badge">
+        <i class="fa-solid fa-circle-check"></i> Completed
+      </span>
+    } @else {
+      <span class="badge pending-badge">
+        <i class="fa-solid fa-clock"></i> In Progress
+      </span>
+    }
+  </div>
+
+  @if (task.summary) {
+    <p class="task-summary">{{ task.summary }}</p>
+  }
+
+  <div class="task-footer">
+    @if (task.dueDate) {
+      <div class="task-date">
+        <i class="fa-regular fa-calendar-days"></i>
+        <time [attr.datetime]="task.dueDate | date:'yyyy-MM-dd'">
+          {{ task.dueDate | date:'fullDate' }}
+        </time>
+      </div>
+    } @else {
+      <div></div>
+    }
+
+    <div class="actions">
+      <button
+        type="button"
+        class="btn-complete"
+        [disabled]="task.completed"
+        (click)="completeTask()"
+        [title]="task.completed ? 'Task completed' : 'Mark task as complete'">
+        <i class="fa-solid fa-check"></i>
+        <span>{{ task.completed ? 'Completed' : 'Complete' }}</span>
+      </button>
+
+      <button
+        type="button"
+        class="btn-delete"
+        (click)="deleteTask()"
+        title="Delete task">
+        <i class="fa-solid fa-trash"></i>
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+</article>
