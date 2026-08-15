@@ -1,41 +1,108 @@
-div {
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 10rem;
+  background-color: #433352;
   border-radius: 6px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.5rem;
-  background-color: #433352;
-  color: #c3b3d1;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  width: 100%;
-  min-width: 10rem;
-  text-align: left;
-}
-
-button:hover,
-button:active,
-.active {
+.user-item:hover,
+.user-item.active {
   background-color: #9965dd;
   color: #150722;
 }
 
-img {
-  width: 2rem;
-  object-fit: contain;
-  border-radius: 50%;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+.user-button {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: #c3b3d1;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
 }
 
-span {
+.user-item:hover .user-button,
+.user-item.active .user-button {
+  color: #150722;
+}
+
+.user-button img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.user-button span {
   margin: 0;
   padding: 0;
   font-size: 0.8rem;
   font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 0.35rem;
+  flex-shrink: 0;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #c3b3d1;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-item:hover .action-button,
+.user-item.active .action-button {
+  color: #150722;
+}
+
+.action-button:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.action-button i {
+  font-size: 0.75rem;
+}
+
+.edit-button:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.delete-button:hover {
+  color: #ff4d4d;
+  background-color: rgba(255, 77, 77, 0.2);
 }

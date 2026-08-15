@@ -1,4 +1,4 @@
-import { Injectable, signal,inject } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { TaskInterface } from '../models/task.interface';
 import { NewTaskInterface } from '../models/new-task.interface';
 import { LocalStorageService } from './localstorage.service';
@@ -13,8 +13,12 @@ export class TasksService {
   constructor() {
     this.loadTasks();
   }
-  addUser(newTask: NewTaskInterface, userId: number) {
-    let newId: number = Math.max(...this.tasks().map((user) => user.id));
+  addTask(newTask: NewTaskInterface, userId: number) {
+    if (!userId) return;
+    const ids = this.tasks()
+      .map((task) => task.id)
+      .filter((id): id is number => Number.isInteger(id) && id >= 0);
+    const newId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
     this.tasks.update((current) => {
       return [
         ...current,
@@ -26,18 +30,38 @@ export class TasksService {
           createdAt: new Date(),
           completedAt: null,
           dueDate: newTask.dueDate,
-          summary: newTask.summary
+          summary: newTask.summary,
         },
       ];
     });
     this.saveTasks();
   }
 
+  completeTask(taskId: number) {
+    this.tasks.update((current) =>
+      current.map((task) =>
+        task.id === taskId ? { ...task, completed: true, completedAt: new Date() } : task,
+      ),
+    );
+    this.saveTasks();
+  }
+
+  deleteTask(taskId: number) {
+    this.tasks.update((current) => current.filter((task) => task.id !== taskId));
+
+    this.saveTasks();
+  }
+
+  deleteUserTask(userId: number) {
+    this.tasks.update((current) => current.filter((task) => task.userId !== userId));
+    this.saveTasks();
+  }
+
   loadTasks() {
-    this.tasks.set(this.storage.get<TaskInterface[]>(this.tasksKey,[]));
+    this.tasks.set(this.storage.get<TaskInterface[]>(this.tasksKey, []));
   }
 
   saveTasks() {
-    this.storage.set(this.tasksKey,JSON.stringify(this.tasks()));
+    this.storage.set(this.tasksKey, this.tasks());
   }
 }

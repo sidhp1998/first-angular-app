@@ -1,31 +1,44 @@
-import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import {NewTaskInterface} from '../models/new-task.interface';
-import { NgClass } from '@angular/common';
-import {FormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  signal,
+  input,
+  output,
+  model,
+} from '@angular/core';
+import { NewTaskInterface } from '../models/new-task.interface';
+import { FormsModule } from '@angular/forms';
+import { ModalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-new-task',
-  imports: [NgClass,FormsModule],
+  imports: [FormsModule, ModalComponent],
   templateUrl: './new-task.component.html',
-  styleUrl: './new-task.component.css',
-  standalone: true
+  styleUrls: ['../shared/form/form.component.css'],
+  standalone: true,
 })
-export class NewTaskComponent  {
-  //@Input() userId!: string;
-  @Output() taskAdded = new EventEmitter<NewTaskInterface>();
-  @Output() taskAddCancelled = new EventEmitter<void>();
+export class NewTaskComponent implements OnInit {
+  // @Output() taskAdded = new EventEmitter<NewTaskInterface>();
+  // @Output() taskAddCancelled = new EventEmitter<void>();
 
-  taskModelObject: NewTaskInterface = {    
-    title: '',    
-    summary: '',    
-    dueDate: null
-  }
-  
+  taskAdded = output<NewTaskInterface>();
+  taskAddCancelled = output<void>();
+
+  ngOnInit(): void {}
+
+  taskModelObject: NewTaskInterface = {
+    title: '',
+    summary: '',
+    dueDate: null,
+  };
+
   cancelAddTask() {
     this.taskAddCancelled.emit();
   }
 
-  submitNewTask(){
+  submitNewTask() {
     this.taskAdded.emit(this.taskModelObject);
   }
 }

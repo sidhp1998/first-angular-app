@@ -15,7 +15,11 @@ export class UsersService {
     this.loadUsers();
   }
   addUser(newUser: NewUserInterface) {
-    let newId: number = Math.max(...this.users().map((user) => user.id));
+    const ids = this.users()
+      .map((user) => user.id)
+      .filter((id): id is number => Number.isInteger(id) && id >= 0);
+
+    const newId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
     this.users.update((current) => {
       return [
         ...current,
@@ -38,10 +42,19 @@ export class UsersService {
 
   updateUser(updatedUser: UserInterface) {
     this.users.update((current) =>
-      current.map((user) => (user.id === updatedUser.id ? updatedUser : user)),
+      current.map((user) => (user.id === updatedUser.id ? { ...updatedUser } : user)),
     );
 
     this.saveUsers();
+  }
+
+  selectUser(userId: number) {
+    this.users.update((current) =>
+      current.map((user) => ({
+        ...user,
+        selected: user.id === userId,
+      })),
+    );
   }
 
   loadUsers(): void {

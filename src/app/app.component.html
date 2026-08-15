@@ -1,23 +1,36 @@
 <app-header></app-header>
-<app
+@if (addNewUserFormShow) {
+  <app-new-user-form
+    (onUserAdd)="onUserAddFn($event)"
+    (onCancelAdd)="onClickCancelAddUser()"
+    [inputUserForEdit]="selectedUserForEdit()!"
+  >
+  </app-new-user-form>
+}
+
 <main>
   <ul id="users">
     <li>
-      <app-add-user (click)="onClickAddUser()"></app-add-user>    
+      <app-add-user (click)="onClickAddUser()"></app-add-user>
     </li>
-    @for (user of users();track user.id) {
+    @for (user of users(); track user.id) {
       <li>
-        <app-user [selectedUser]="user" (click)="onSelectUser(user.id)"> </app-user>
+        <app-user
+          [selectedUser]="user"
+          (click)="onSelectUser(user.id)"
+          (edit)="onEditUserFn($event)"
+          (delete)="onDeleteUserFn($event)"
+        >
+        </app-user>
       </li>
     }
   </ul>
-  <!-- @if(selectedUser) {
-    <app-task-list [selectedUser]="selectedUser"></app-task-list>
-  }
-  @else {
+  @if (selectedUser() && users().length > 0) {
+    <app-task-list [selectedUser]="selectedUser()"></app-task-list>
+  } @else if (users().length > 0) {
     <p>Please select an user</p>
-  } -->
-  @if(users().length==0){
+  }
+  @if (users().length == 0) {
     <p>Please Add an user</p>
   }
 </main>

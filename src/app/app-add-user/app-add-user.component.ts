@@ -5,7 +5,7 @@ import { Component} from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './app-add-user.component.html',
-  styleUrl: '../user/user.component.css'
+  styleUrl: './app-add-user.component.css'
 })
 
 export class AddUserComponent  {
