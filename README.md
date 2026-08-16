@@ -35,10 +35,10 @@ graph TD
     Tasks --> NewTask
     Tasks --> SharedModal
 
-    User -->|inject()| US
-    Users -->|inject()| US
-    Tasks -->|inject()| TS
-    NewTask -->|inject()| TS
+    User -->|"inject()"| US
+    Users -->|"inject()"| US
+    Tasks -->|"inject()"| TS
+    NewTask -->|"inject()"| TS
     
     US -->|read/write| LS
     TS -->|read/write| LS
